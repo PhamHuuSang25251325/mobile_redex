@@ -6,6 +6,8 @@ import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import HomeScreen from '../screens/HomeScreen';
 import CartScreen from "../screens/CartScreen";
+import OrderScreen from "../screens/OrderScreen";
+import OrderSiteView from "../screens/OrderSiteView";
 
 const AuthStack = createStackNavigator();
 const AuthNavigator = () => {
@@ -23,19 +25,41 @@ const AuthNavigator = () => {
     )
 }
 
+const OrderStack = createStackNavigator();
+const OrderNavigator = () => {
+    return (
+        <OrderStack.Navigator initialRouteName="Order" headerMode="none">
+             <OrderStack.Screen
+                component={OrderScreen}
+                name="Order"
+            />
+            <OrderStack.Screen
+                component={OrderSiteView}
+                name="OrderSite"
+            />
+        </OrderStack.Navigator>
+    )
+}
+
 const MainDrawer = createDrawerNavigator();
 const MainNavigator = () => {
     return (
         <MainDrawer.Navigator>
-            <MainDrawer.Screen 
-            name="Home" 
-            component={HomeScreen}
-            options={{title : 'TRANG CHỦ'}} 
+            <MainDrawer.Screen
+                name="Home"
+                component={HomeScreen}
+                options={{ title: 'TRANG CHỦ' }}
             />
             <MainDrawer.Screen
                 name="Cart"
                 component={CartScreen}
                 options={{ title: 'GIỎ HÀNG' }}
+            />
+            <MainDrawer.Screen
+                name="Order"
+                component={OrderNavigator}
+                options={{ title: 'ĐẶT HÀNG' }}
+                
             />
         </MainDrawer.Navigator>
     )
