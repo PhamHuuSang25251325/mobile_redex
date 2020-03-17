@@ -11,20 +11,35 @@ const OrderScreen = ({ navigation }) => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <CustomHeader title="ĐẶT HÀNG" navigation={navigation} />
+            <CustomHeader title="ĐẶT HÀNG" navigation={navigation} isHome={true} />
             <View style={styles.listLogoContainer}>
                 <View style={styles.logoContainer}>
-                    <TouchableOpacity onPress={() => { }}>
+                    <TouchableOpacity onPress={() => {
+                        navigation.navigate('OrderSite', {
+                            uri: 'https://www.taobao.com/',
+                            title : 'TAOBAO.COM'
+                        })
+                    }}>
                         <Image style={styles.image} source={Images.taobao_logo} />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.logoContainer}>
-                    <TouchableOpacity onPress={() => { navigation.navigate('OrderSite')}}>
+                    <TouchableOpacity onPress={() => {
+                        navigation.navigate('OrderSite', {
+                            uri: 'https://www.tmall.com/',
+                            title : 'TMALL.COM'
+                        })
+                    }}>
                         <Image style={styles.image} source={Images.tmall_logo} />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.logoContainer}>
-                    <TouchableOpacity onPress={() => { }}>
+                    <TouchableOpacity onPress={() => {
+                        navigation.navigate('OrderSite', {
+                            uri: 'https://www.1688.com/',
+                            title : '1688.COM'
+                        })
+                    }}>
                         <Image style={styles.image} source={Images.s1688_logo} />
                     </TouchableOpacity>
                 </View>

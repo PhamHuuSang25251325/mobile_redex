@@ -1,20 +1,30 @@
 import React, { useContext } from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import Images from '../constants/images';
-import {Context} from '../contexts/AuthContext';
+import { Context } from '../contexts/AuthContext';
 
-const CustomHeader = ({ title, navigation }) => {
-    const {logout} = useContext(Context);
+const CustomHeader = ({ title, navigation, isHome }) => {
+    const { logout } = useContext(Context);
     return (
-        <View style={{ flexDirection: 'row', height: 50 , backgroundColor : '#FB5B04'}}>
+        <View style={{ flexDirection: 'row', height: 50, backgroundColor: '#FB5B04' }}>
             <View style={{ flex: 1, justifyContent: "center" }}>
-                <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                    <Image style={{ width: 30, height: 30, marginLeft: 5 }}
-                        source={Images.menu}
-                        resizeMode="contain"
+                {isHome ? (
+                    <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                        <Image style={{ width: 30, height: 30, marginLeft: 5 }}
+                            source={Images.menu}
+                            resizeMode="contain"
 
-                    />
-                </TouchableOpacity>
+                        />
+                    </TouchableOpacity>
+                ) : (
+                        <TouchableOpacity onPress={() => navigation.goBack()}>
+                            <Image style={{ width: 30, height: 30, marginLeft: 5 }}
+                                source={Images.back}
+                                resizeMode="contain"
+
+                            />
+                        </TouchableOpacity>
+                    )}
             </View>
             <View style={{ flex: 1.5, justifyContent: 'center' }}>
                 <Text style={{ textAlign: 'center' }}>{title}</Text>
@@ -29,7 +39,7 @@ const CustomHeader = ({ title, navigation }) => {
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1, justifyContent: 'center' }}>
-                    <TouchableOpacity onPress={() =>  navigation.navigate('Cart')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
                         <Image style={{ width: 25, height: 25, marginLeft: 5 }}
                             source={Images.cart}
                             resizeMode="contain"

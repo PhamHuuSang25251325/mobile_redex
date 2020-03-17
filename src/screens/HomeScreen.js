@@ -6,10 +6,10 @@ import { Context as AuthContext } from '../contexts/AuthContext';
 
 
 const HomeScreen = ({ navigation }) => {
-    const uri = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQxhKJ7z3CxlyYYicCkJHS_6VEricDLKfD9VALObOTjLIm8AVU0';
+    const uri = 'http://img.alicdn.com/imgextra/i2/1751590872/TB2J9.ZnVXXXXbmXXXXXXXXXXXX_!!1751590872.jpg_150x150q75.jpg_.webp';
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <CustomHeader title="Home" navigation={navigation} />
+            <CustomHeader title="Home" navigation={navigation} isHome={true} />
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <Image
                     style={{ width: 100, height: 100 }}

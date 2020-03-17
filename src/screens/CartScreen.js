@@ -8,7 +8,7 @@ const CartScreen = ({ navigation }) => {
     const uri = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQxhKJ7z3CxlyYYicCkJHS_6VEricDLKfD9VALObOTjLIm8AVU0';
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <CustomHeader title="Giỏ hàng" navigation={navigation} />
+            <CustomHeader title="Giỏ hàng" navigation={navigation} isHome={true} />
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' ,backgroundColor : '#f5f8fa' }}>
                 <FlatList
                     data={[1, 2, 3, 4]}

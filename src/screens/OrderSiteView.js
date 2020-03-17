@@ -1,16 +1,37 @@
-import React , { useContext} from 'react';
-import { View, Text } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { View, ActivityIndicator, StyleSheet, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomHeader from '../shared/CustomHeader';
-import {Context as AuthContext} from '../contexts/AuthContext';
+import { WebView } from 'react-native-webview';
 
 
-const OrderSiteView = ({navigation}) => {
-    const {logout}= useContext(AuthContext);
+const OrderSiteView = ({ navigation, route }) => {
+    const { uri,title } = route.params;
+    const [visible, setVisible] = useState(true);
+
+    const showSpinner = () => {
+        setVisible(true);
+    }
+
+    const hideSpinner = () => {
+        setVisible(false);
+    }
+
+    const handleMessageAddToCart = e =>{
+        debugger
+        const data = JSON.parse(e.nativeEvent.data);
+        console.log(data)
+    }
+
+
     const myScript = `
-        
+    var css = ".sang-style{background: #FFF; position : fixed;bottom : 0; width : 100%; z-index : 99999999999; padding: 5px 10px}.sang-style input{width: 100%; padding: 8px 10px; border-radius: 2px; margin-bottom: 5px; border: 1px solid #ddd}.sang-style button{width:50%; padding: 10px 10px;color:#FFF;background:rgb(1, 82, 230);border:none}.sang-style button:last-child{background:rgb(230, 64, 1)}";
+    var myStyle = document.createElement("style");
+    myStyle.innerText = css;
+    const head = document.getElementsByTagName("head")[0];
+    head.appendChild(myStyle);
+
       const body = document.getElementsByTagName("body")[0];
-     
       function getShopId(prop) {
           const shop = document.querySelector(".shop-wrapper .shop-title-wrapper");
           if (shop) {
@@ -45,7 +66,7 @@ const OrderSiteView = ({navigation}) => {
                   if (img.length) {
                       img_src = img[0].getAttribute('src');
                       img_src = resizeImage(img_src);
-                      return encodeURIComponent(img_src);
+                      return  img_src;
                   }
               }
 
@@ -55,19 +76,18 @@ const OrderSiteView = ({navigation}) => {
       }
 
       function createDialog() {
-        var url1= window.location.href;
-        alert(url1.searchParams.get("id"))
+
+
+
           var myDialog = document.createElement("div");
-          myDialog.style.position = "fixed";
-          myDialog.style.bottom = "0";
-          myDialog.style.width = '100%';
-          myDialog.style.height = '100px';
-          myDialog.style.zIndex = 10000000;
+
+          myDialog.classList.add("sang-style");
           const inputNote = document.createElement("input");
           inputNote.placeholder = "Ghi chú";
           myDialog.appendChild(inputNote);
           const btnViewCart = document.createElement("button");
           btnViewCart.innerText = "Xem thuộc tính";
+          btnViewCart.style.width = '50%'
           btnViewCart.addEventListener('click', function () {
               const xx = document.getElementsByClassName('sku card');
               xx[0].click();
@@ -87,28 +107,11 @@ const OrderSiteView = ({navigation}) => {
                   if (count < props.length) {
                       alert('Chưa chọn đủ thuộc tính SP')
                   } else {
-                      alert(getImgLink())
-                      alert(window.location.href);
-                      const request = new XMLHttpRequest()
-                      var formData = new FormData();
-                      formData.append("title", "Groucho");
-                      formData.append("body", "Groucho2121");
-                      formData.append("userId", 1);
-                      request.open('POST', 'https://jsonplaceholder.typicode.com/posts', true)
-                      request.setRequestHeader("Content-Type", "multipart/form-data");
-                      request.onreadystatechange = function () {
-                          if (this.readyState === XMLHttpRequest.DONE) {
-                              const data = JSON.parse(this.response);
-                              alert(JSON.stringify(data));
-                          }else{
-                            alert(12121)
-                          }
-                      }
-
-                      request.send(JSON.stringify({
-                        title: 'foo',
-                        body: 'bar',
-                        userId: 2
+                      const img_link = getImgLink();
+                      const url_sp=window.location.href;
+                      window.ReactNativeWebView.postMessage(JSON.stringify({
+                          image_link : img_link,
+                          url : url_sp
                       }))
                   }
               } else {
@@ -120,19 +123,40 @@ const OrderSiteView = ({navigation}) => {
           body.appendChild(myDialog);
       }
       createDialog();
-      true; // note: this is required, or you'll sometimes get silent failures
     `;
     return (
-        <SafeAreaView style={{flex : 1}}>
-            <CustomHeader title="Site View" navigation={navigation}/>
-            <View style={{flex : 1, justifyContent : 'center', alignItems : 'center'}}>
-                <Text>Order Site View</Text>
-                
-            </View>
+        <SafeAreaView style={{ flex: 1 }}>
+            <CustomHeader title={title} navigation={navigation} />
+            <WebView
+                style={styles.WebViewStyle}
+                source={{ uri }}
+                onLoadStart={showSpinner}
+                onLoad={hideSpinner}
+                javaScriptEnabled={true}
+                injectedJavaScript={myScript}
+                onMessage={handleMessageAddToCart}
+            />
+            {visible && (
+                <View style={{ flex: 1, alignItems: 'center' }}>
+                    <ActivityIndicator
+                        size="large"
+                    />
+                </View>
+            )}
+
         </SafeAreaView>
 
     )
 }
+
+const styles = StyleSheet.create({
+    WebViewStyle: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
+        marginTop: 20,
+    },
+})
 
 
 
