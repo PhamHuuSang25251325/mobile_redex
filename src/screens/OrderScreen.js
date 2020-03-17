@@ -7,8 +7,6 @@ import Images from '../constants/images';
 
 const { width: WIDTH } = Dimensions.get('window');
 const OrderScreen = ({ navigation }) => {
-    const { logout } = useContext(AuthContext);
-
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <CustomHeader title="ĐẶT HÀNG" navigation={navigation} isHome={true} />
