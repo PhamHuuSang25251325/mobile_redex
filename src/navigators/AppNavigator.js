@@ -11,6 +11,7 @@ import OrderSiteView from "../screens/OrderSiteView";
 import { SafeAreaView, ScrollView, TouchableOpacity, Text, View, Image } from "react-native";
 import Images from '../constants/images';
 import { Context } from '../contexts/AuthContext';
+import ForgotPassScreen from "../screens/ForgotPassScreen";
 
 const AuthStack = createStackNavigator();
 const AuthNavigator = () => {
@@ -23,6 +24,10 @@ const AuthNavigator = () => {
             <AuthStack.Screen
                 component={RegisterScreen}
                 name="Register"
+            />
+              <AuthStack.Screen
+                component={ForgotPassScreen}
+                name="Forgot"
             />
         </AuthStack.Navigator>
     )
@@ -41,6 +46,22 @@ const OrderNavigator = () => {
                 name="OrderSite"
             />
         </OrderStack.Navigator>
+    )
+}
+
+const CartStack = createStackNavigator();
+const CartNavigator = () => {
+    return (
+        <CartStack.Navigator initialRouteName="Cart" headerMode="none">
+            <CartStack.Screen
+                component={CartScreen}
+                name="Cart"
+            />
+            <CartStack.Screen
+                component={OrderSiteView}
+                name="OrderSite1"
+            />
+        </CartStack.Navigator>
     )
 }
 
@@ -101,7 +122,7 @@ const MainNavigator = () => {
             />
             <MainDrawer.Screen
                 name="Cart"
-                component={CartScreen}
+                component={CartNavigator}
                 options={{ title: 'GIỎ HÀNG' }}
             />
             <MainDrawer.Screen

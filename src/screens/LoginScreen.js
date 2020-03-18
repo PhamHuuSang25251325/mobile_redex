@@ -6,10 +6,10 @@ import { Context } from '../contexts/AuthContext';
 
 const { width: WIDTH } = Dimensions.get('window');
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
     const { data, login } = useContext(Context);
     console.log(data);
-    
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     return (
@@ -46,6 +46,15 @@ const LoginScreen = () => {
                     <Text style={styles.btnText}>Login</Text>
                 )}
             </TouchableOpacity>
+            <View style={styles.textContainer}>
+                <TouchableOpacity onPress={()=>navigation.navigate('Register')}>
+                    <Text style={styles.textLink}>Đăng kí tài khoản</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={()=>navigation.navigate('Forgot')}>
+                    <Text style={{ ...styles.textLink, color: 'red' }}>Quên mật khẩu</Text>
+                </TouchableOpacity>
+
+            </View>
         </ImageBackground>
     )
 }
@@ -95,12 +104,22 @@ const styles = StyleSheet.create({
     btnText: {
         color: 'rgba(255,255,255,0.7)',
         textAlign: 'center',
-        fontSize: 16
+        fontSize: 16,
     },
     textError: {
         color: 'red',
         fontSize: 14,
         marginLeft: 40
+    },
+    textContainer: {
+        flexDirection: 'row',
+        marginTop: 10
+    },
+    textLink: {
+        fontSize: 16,
+        textDecorationLine: 'underline',
+        textAlign: 'center',
+        margin: 10
     }
 
 })

@@ -15,7 +15,7 @@ const OrderScreen = ({ navigation }) => {
                 <View style={styles.logoContainer}>
                     <TouchableOpacity onPress={() => {
                         navigation.navigate('OrderSite', {
-                            uri: 'https://www.taobao.com/',
+                            uri: 'https://main.m.taobao.com/',
                             title : 'TAOBAO.COM'
                         })
                     }}>
@@ -35,7 +35,7 @@ const OrderScreen = ({ navigation }) => {
                 <View style={styles.logoContainer}>
                     <TouchableOpacity onPress={() => {
                         navigation.navigate('OrderSite', {
-                            uri: 'https://www.1688.com/',
+                            uri: 'https://m.1688.com/',
                             title : '1688.COM'
                         })
                     }}>

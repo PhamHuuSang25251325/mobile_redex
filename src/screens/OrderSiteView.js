@@ -132,11 +132,7 @@ const OrderSiteView = ({ navigation, route }) => {
         }
 
         function createDialog() {
-
-
-
             var myDialog = document.createElement("div");
-
             myDialog.classList.add("sang-style");
             const inputNote = document.createElement("input");
             inputNote.placeholder = "Ghi chú";

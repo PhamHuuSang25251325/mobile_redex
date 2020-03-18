@@ -1,5 +1,6 @@
 import createDataContext from './createDataContext';
 import apiHepler from './../services/axiosConfig';
+import { ToastAndroid } from 'react-native'
 
 const FETCH_PRODUCTS = 'FETCH_PRODUCTS';
 const ADD_ITEM = 'ADD_ITEM';
@@ -38,7 +39,7 @@ const reducer = (state = initialState, action) => {
         case DELETE_ITEM:
             return {
                 ...state,
-                listItem: state.listItem.filter(item => item.id !== action.item.id)
+                listItem: state.listItem.filter(item => item.id !== action.id)
             }
         case CHECK_OUT:
             return initialState;
@@ -51,11 +52,12 @@ const reducer = (state = initialState, action) => {
 const addItem = dispatch => async (item) => {
     try {
         const data = await apiHepler.post('/carts', item);
-        const {cart} = data.data
+        const { cart } = data.data
         dispatch({
             type: ADD_ITEM,
-            item : cart
+            item: cart
         })
+        ToastAndroid.show('Đã thêm sản phẩm vào giỏ hàng', ToastAndroid.LONG,ToastAndroid.TOP);
     } catch (error) {
         console.log({ error })
     }
@@ -84,12 +86,19 @@ const getItems = dispatch => async () => {
 }
 
 
-const deleteItem = dispatch => (item) => {
-    //call Api
-    dispatch({
-        type: DELETE_ITEM,
-        item
-    })
+const deleteItem = dispatch => async (id) => {
+
+    try {
+        await apiHepler.delete(`/carts/${id}`);
+        dispatch({
+            type: DELETE_ITEM,
+            id
+        })
+        ToastAndroid.show('Xóa thành công', ToastAndroid.LONG,ToastAndroid.TOP);
+    } catch (error) {
+        console.log({ error })
+    }
+
 
 }
 

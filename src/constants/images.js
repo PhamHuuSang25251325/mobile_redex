@@ -10,5 +10,7 @@ export default {
     tmall_logo : require('./../assets/images/tmall.jpg'),
     s1688_logo : require('./../assets/images/1688.png'),
     order : require('./../assets/images/order.png'),
+    remove : require('./../assets/images/stop.png'),
+    trash : require('./../assets/images/trash.png'),
     
 }
