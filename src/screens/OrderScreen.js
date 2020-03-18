@@ -1,12 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomHeader from '../shared/CustomHeader';
-import { Context as AuthContext } from '../contexts/AuthContext';
+
 import Images from '../constants/images';
 
 const { width: WIDTH } = Dimensions.get('window');
 const OrderScreen = ({ navigation }) => {
+    
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <CustomHeader title="ĐẶT HÀNG" navigation={navigation} isHome={true} />

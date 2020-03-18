@@ -1,4 +1,4 @@
-import React, { useContext,useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Images from './../constants/images';
 import { TextInput } from 'react-native-gesture-handler';
@@ -8,8 +8,10 @@ const { width: WIDTH } = Dimensions.get('window');
 
 const LoginScreen = () => {
     const { data, login } = useContext(Context);
-    const [username,setUsername]= useState('');
-    const [password,setPassword]= useState('');
+    console.log(data);
+    
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     return (
         <ImageBackground source={Images.background_login} style={styles.backgroundContainer}>
             <View style={styles.logoContainer}>
@@ -38,7 +40,8 @@ const LoginScreen = () => {
                 />
                 {/* <Text style={styles.textError}>Mật khẩu không được để trống</Text> */}
             </View>
-            <TouchableOpacity onPress={()=>login({username,password})} style={styles.btnLogin} disabled={data.logginIn}>
+            {data.err_message && <Text style={styles.textError}>{data.err_message}</Text>}
+            <TouchableOpacity onPress={() => login({ username, password })} style={styles.btnLogin} disabled={data.logginIn}>
                 {data.logginIn ? (<ActivityIndicator />) : (
                     <Text style={styles.btnText}>Login</Text>
                 )}
@@ -97,7 +100,7 @@ const styles = StyleSheet.create({
     textError: {
         color: 'red',
         fontSize: 14,
-        marginLeft : 40
+        marginLeft: 40
     }
 
 })

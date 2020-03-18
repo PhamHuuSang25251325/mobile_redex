@@ -1,5 +1,6 @@
 import createDataContext from './createDataContext';
 import AsyncStorage from '@react-native-community/async-storage';
+import apiHepler from './../services/axiosConfig';
 
 const LOGIN_REQUEST = 'LOGIN_REQUEST';
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -12,7 +13,8 @@ const initialState = {
     loggedIn: false,
     user: null,
     userToken: null,
-    isLoading : true
+    isLoading: true,
+    err_message : ''
 }
 
 const reducer = (state = initialState, action) => {
@@ -21,7 +23,7 @@ const reducer = (state = initialState, action) => {
             return {
                 loggedIn: true,
                 userToken: action.token,
-                isLoading : false
+                isLoading: false
             }
         case LOGIN_REQUEST:
             return {
@@ -32,13 +34,17 @@ const reducer = (state = initialState, action) => {
             return {
                 loggedIn: true,
                 user: action.user,
-                 userToken : action.token
+                userToken: action.token
             }
         case LOGIN_FAILURE:
-            return {}
+            return {
+                 err_message : action.message
+            }
 
         case LOGOUT:
-            return {}
+            return {
+               
+            }
 
         default:
             return state;
@@ -47,29 +53,42 @@ const reducer = (state = initialState, action) => {
 
 const login = dispatch => async ({ username, password }) => {
     dispatch({
-        type : LOGIN_REQUEST
+        type: LOGIN_REQUEST
     })
-    await AsyncStorage.setItem('userToken', username);
-    dispatch({
-        type : LOGIN_SUCCESS,
-        token : username
-    })
+    try {
+        const data = await apiHepler.post('/login', {
+            email : username,
+            password : password
+        });
+        const {token} = data.data;
+        await AsyncStorage.setItem('userToken', token);
+        dispatch({
+            type: LOGIN_SUCCESS,
+            token
+        })
+    } catch ({response : {data}}) {
+        dispatch({
+            type: LOGIN_FAILURE,
+            message : data.message
+        })
+    }
+
 }
 
-const restoreToken = dispatch =>  (token) => {
+const restoreToken = dispatch => (token) => {
     dispatch({
-        type : RESTORE_TOKEN,
+        type: RESTORE_TOKEN,
         token
     })
-   
+
 }
 
-const logout = dispatch =>async () => {
+const logout = dispatch => async () => {
     await AsyncStorage.removeItem('userToken')
     dispatch({
-        type : LOGOUT,
+        type: LOGOUT,
     })
-   
+
 }
 
-export const { Context, Provider } = createDataContext(reducer, { login,restoreToken,logout }, initialState); 
+export const { Context, Provider } = createDataContext(reducer, { login, restoreToken, logout }, initialState); 

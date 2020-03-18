@@ -3,10 +3,11 @@ import { View, ActivityIndicator, StyleSheet, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomHeader from '../shared/CustomHeader';
 import { WebView } from 'react-native-webview';
-import axios from 'axios';
+import {Context} from '../contexts/CartContext';
 
 
 const OrderSiteView = ({ navigation, route }) => {
+    const {addItem} = useContext(Context);
     const { uri, title } = route.params;
     const [visible, setVisible] = useState(true);
 
@@ -22,7 +23,7 @@ const OrderSiteView = ({ navigation, route }) => {
 
     const handleMessageAddToCart = e => {
         const data = JSON.parse(e.nativeEvent.data);
-        console.log(data)
+        addItem(data);
     }
 
 

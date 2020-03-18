@@ -1,4 +1,5 @@
 import createDataContext from './createDataContext';
+import apiHepler from './../services/axiosConfig';
 
 const FETCH_PRODUCTS = 'FETCH_PRODUCTS';
 const ADD_ITEM = 'ADD_ITEM';
@@ -19,7 +20,7 @@ const reducer = (state = initialState, action) => {
             }
         case ADD_ITEM:
             let index = state.listItem.findIndex(item => item.id === action.item.id);
-            if (index !== -1) {
+            if (index === -1) {
                 return {
                     ...state,
                     listItem: [...state.listItem, action.item]
@@ -48,11 +49,16 @@ const reducer = (state = initialState, action) => {
 }
 
 const addItem = dispatch => async (item) => {
-    // call API
-    dispatch({
-        type: ADD_ITEM,
-        item
-    })
+    try {
+        const data = await apiHepler.post('/carts', item);
+        const {cart} = data.data
+        dispatch({
+            type: ADD_ITEM,
+            item : cart
+        })
+    } catch (error) {
+        console.log({ error })
+    }
 }
 
 const updateItem = dispatch => async (item) => {
@@ -64,12 +70,17 @@ const updateItem = dispatch => async (item) => {
 }
 
 const getItems = dispatch => async () => {
-    // call API
-    const items = [];
-    dispatch({
-        type: FETCH_PRODUCTS,
-        items
-    })
+    try {
+        const data = await apiHepler.get('/carts');
+        const items = data.data;
+        dispatch({
+            type: FETCH_PRODUCTS,
+            items
+        })
+    } catch (error) {
+        console.log({ error });
+    }
+
 }
 
 

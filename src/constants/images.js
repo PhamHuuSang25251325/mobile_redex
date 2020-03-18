@@ -9,5 +9,6 @@ export default {
     taobao_logo : require('./../assets/images/taobao.jpg'),
     tmall_logo : require('./../assets/images/tmall.jpg'),
     s1688_logo : require('./../assets/images/1688.png'),
+    order : require('./../assets/images/order.png'),
     
 }

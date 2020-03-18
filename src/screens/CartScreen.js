@@ -1,27 +1,31 @@
-import React, { useContext } from 'react';
+import React, { useContext ,useEffect} from 'react';
 import { View, Text, Image, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomHeader from '../shared/CustomHeader';
-
+import { Context as CartContext } from '../contexts/CartContext';
 
 const CartScreen = ({ navigation }) => {
-    const uri = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQxhKJ7z3CxlyYYicCkJHS_6VEricDLKfD9VALObOTjLIm8AVU0';
+    const {data,getItems} = useContext(CartContext);
+    useEffect(()=>{
+        getItems();
+    },[])
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <CustomHeader title="Giỏ hàng" navigation={navigation} isHome={true} />
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' ,backgroundColor : '#f5f8fa' }}>
                 <FlatList
-                    data={[1, 2, 3, 4]}
+                    data={data.listItem}
+                    keyExtractor={item=>item.id.toString()}
                     renderItem={({ item }) => (
-                        <View style={{ borderColor: '#ddd', borderWidth: 1, marginTop: 20, borderRadius : 5 , padding : 10, backgroundColor : '#ffffff',  width: 380}}>
+                        <View id={item.id} style={{ borderColor: '#ddd', borderWidth: 1, marginTop: 20, borderRadius : 5 , padding : 10, backgroundColor : '#ffffff',  width: 380}}>
                             <View>
-                                <Text>Card Header</Text>
+                            <Text>{item.shop_name}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', borderColor: '#ddd', borderWidth: 1 }}>
                                 <View style={{ flex: 2.5 }}>
                                     <Image
                                         style={{ width: 100, height: 100 }}
-                                        source={{ uri }}
+                                        source={{ uri : `https:${item.image_link}` }}
                                     />
                                 </View>
                                 <View style={{ flex: 7.5, borderColor: '#ddd', borderWidth: 1, marginLeft : 10 }}>

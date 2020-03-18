@@ -2,7 +2,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const instance = axios.create({
-    baseURL : 'https://jsonplaceholder.typicode.com'
+    baseURL : 'https://cryptic-headland-99504.herokuapp.com/api'
 })
 
 instance.interceptors.request.use(
