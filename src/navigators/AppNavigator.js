@@ -68,8 +68,11 @@ const CartNavigator = () => {
 const CustomDrawerContent = ({ navigation },logout) => {
  
     return (
-        <SafeAreaView style={{ flex: 1, marginLeft: 20 }}>
-            <ScrollView>
+        <SafeAreaView style={{ flex: 1 }}>
+            <View style={{alignContent : 'center', alignItems : 'center', backgroundColor : 'orange'}}>
+                <Image source={Images.profile} style={{width : 100,height :100}}/>
+            </View>
+            <ScrollView style={{marginLeft : 20}}>
                 <TouchableOpacity
                     style={{ marginTop: 20 }}
                     onPress={() => navigation.navigate('Home')}
@@ -113,6 +116,7 @@ const MainNavigator = () => {
     const { logout } = useContext(Context);
     return (
         <MainDrawer.Navigator
+            drawerStyle={{width : 350}}
             drawerContent={props => CustomDrawerContent(props,logout)}>
 
             <MainDrawer.Screen

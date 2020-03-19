@@ -12,5 +12,8 @@ export default {
     order : require('./../assets/images/order.png'),
     remove : require('./../assets/images/stop.png'),
     trash : require('./../assets/images/trash.png'),
+    plus : require('./../assets/images/plus.png'),
+    minus : require('./../assets/images/minus.png'),
+    profile : require('./../assets/images/user.png'),
     
 }

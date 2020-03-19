@@ -72,6 +72,19 @@ const OrderSiteView = ({ navigation, route }) => {
             return quantity;
         }
 
+        function getProductName() {
+            let name= '';
+            const divNameTitle = document.querySelector(".title-wrapper .title");
+            
+            if(divNameTitle){
+                const fontWrraper = divNameTitle.childNodes;
+                name= divNameTitle.innerText;
+                
+            }
+            return name;
+            
+        }
+
         function getShopName(){
             let shop_name = '';
             const shopTitle = document.querySelector(".shop-title-wrapper .shop-title");
@@ -166,6 +179,7 @@ const OrderSiteView = ({ navigation, route }) => {
                         const quantity = getQuantity();
                         const shop_logo = getShopLogo();
                         const shop_name = getShopName();
+                        const product_name = getProductName();
                       
                         window.ReactNativeWebView.postMessage(JSON.stringify({
                             image_link : img_link,
@@ -174,7 +188,8 @@ const OrderSiteView = ({ navigation, route }) => {
                             price : price,
                             quantity : quantity,
                             shop_logo : shop_logo,
-                            shop_name : shop_name
+                            shop_name : shop_name,
+                            product_name : product_name
                         }))
                     }
                 } else {

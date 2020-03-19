@@ -8,8 +8,10 @@ const UPDATE_ITEM = 'UPDATE_ITEM';
 const DELETE_ITEM = 'DELETE_ITEM';
 const CHECK_OUT = 'CHECK_OUT';
 
+
 const initialState = {
-    listItem: []
+    listItem: [],
+    loading : true
 }
 
 const reducer = (state = initialState, action) => {
@@ -17,7 +19,8 @@ const reducer = (state = initialState, action) => {
         case FETCH_PRODUCTS:
             return {
                 ...state,
-                listItem: action.items
+                listItem: action.items,
+                loading : false
             }
         case ADD_ITEM:
             let index = state.listItem.findIndex(item => item.id === action.item.id);
@@ -52,6 +55,7 @@ const reducer = (state = initialState, action) => {
 const addItem = dispatch => async (item) => {
     try {
         const data = await apiHepler.post('/carts', item);
+        console.log(data);
         const { cart } = data.data
         dispatch({
             type: ADD_ITEM,
@@ -64,11 +68,17 @@ const addItem = dispatch => async (item) => {
 }
 
 const updateItem = dispatch => async (item) => {
-    // call API
-    dispatch({
+    try { 
+        const {id} = item;
+        const data = await apiHepler.put(`/carts/${id}`,item)
+        dispatch({
         type: UPDATE_ITEM,
         item
     })
+    } catch (error) {
+        
+    }
+    
 }
 
 const getItems = dispatch => async () => {
