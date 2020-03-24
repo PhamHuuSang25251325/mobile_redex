@@ -1,12 +1,16 @@
 import createDataContext from './createDataContext';
 import AsyncStorage from '@react-native-community/async-storage';
 import apiHepler from './../services/axiosConfig';
-
+import { ToastAndroid } from 'react-native'
 const LOGIN_REQUEST = 'LOGIN_REQUEST';
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const LOGIN_FAILURE = 'LOGIN_FAILURE';
 const LOGOUT = 'LOGOUT';
-const RESTORE_TOKEN = 'RESTORE_TOKEN'
+const REFRESH_TOKEN = 'REFRESH_TOKEN';
+const REGISTER_SUCCESS= 'REGISTER_SUCCESS';
+const REGISTER_FAILURE= 'REGISTER_FAILURE';
+
+
 
 const initialState = {
     logginIn: false,
@@ -14,12 +18,13 @@ const initialState = {
     user: null,
     userToken: null,
     isLoading: true,
-    err_message : ''
+    err_message: ''
 }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case RESTORE_TOKEN:
+       
+        case REFRESH_TOKEN:
             return {
                 loggedIn: true,
                 userToken: action.token,
@@ -38,12 +43,12 @@ const reducer = (state = initialState, action) => {
             }
         case LOGIN_FAILURE:
             return {
-                 err_message : action.message
+                err_message: action.message
             }
-
+           
         case LOGOUT:
             return {
-               
+
             }
 
         default:
@@ -57,31 +62,41 @@ const login = dispatch => async ({ username, password }) => {
     })
     try {
         const data = await apiHepler.post('/login', {
-            email : username,
-            password : password
+            email: username,
+            password: password
         });
-        const {token} = data.data;
+        const { token } = data.data;
         await AsyncStorage.setItem('userToken', token);
         dispatch({
             type: LOGIN_SUCCESS,
             token
         })
-    } catch ({response : {data}}) {
+    } catch ({ response: { data } }) {
         dispatch({
             type: LOGIN_FAILURE,
-            message : data.message
+            message: data.message
         })
     }
 
 }
 
-const restoreToken = dispatch => (token) => {
-    dispatch({
-        type: RESTORE_TOKEN,
-        token
-    })
+const register = dispatch => async ({ email, password,name }) => {
+   
+    try {
+         await apiHepler.post('/register', {
+            email,
+            password,
+            name
+        });
+        ToastAndroid.show('Đăng kí tài khoản thành công', ToastAndroid.LONG,ToastAndroid.TOP);
+        
+    } catch ({ response: { data } }) {
+        
+        ToastAndroid.show(data.message, ToastAndroid.LONG,ToastAndroid.TOP);
+    }
 
 }
+
 
 const logout = dispatch => async () => {
     await AsyncStorage.removeItem('userToken')
@@ -91,4 +106,20 @@ const logout = dispatch => async () => {
 
 }
 
-export const { Context, Provider } = createDataContext(reducer, { login, restoreToken, logout }, initialState); 
+const refreshToken = dispatch => async () => {
+    try {
+        const res = await apiHepler.post('/refresh');
+        const token = res.data.access_token;
+        await AsyncStorage.setItem('userToken', token);
+        dispatch({
+            type: REFRESH_TOKEN,
+            token
+        })
+    } catch (error) {
+        dispatch({
+            type : LOGOUT
+        })
+    }
+}
+
+export const { Context, Provider } = createDataContext(reducer, { login, logout ,refreshToken, register}, initialState); 

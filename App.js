@@ -1,24 +1,26 @@
 
-
 import React from 'react';
-import AppNavigatorContainer from './src/navigators/AppNavigatorContainer';
-import { Provider as TestProvider } from './src/contexts/TestContext'
+import NavigatorConatiner from './src/navigation/NavigatorContainer';
 import { Provider as AuthProvider } from './src/contexts/AuthContext'
 import { Provider as CartProvider } from './src/contexts/CartContext'
+import { Provider } from 'react-redux';
+import store from './src/store';
+
+
 
 const App = () => {
   return (
-    <AuthProvider>
-      <CartProvider>
-        <TestProvider>
-          <AppNavigatorContainer />
-        </TestProvider>
-      </CartProvider>
-    </AuthProvider>
-
+    <Provider store={store} >
+      <AuthProvider >
+        <CartProvider>
+          <NavigatorConatiner />
+        </CartProvider>
+      </AuthProvider>
+    </Provider>
 
   )
 }
+
 
 
 export default App;

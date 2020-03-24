@@ -35,12 +35,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "com.redexorder",
+    package = "com.redexmobile",
 )
 
 android_resource(
     name = "res",
-    package = "com.redexorder",
+    package = "com.redexmobile",
     res = "src/main/res",
 )
 
