@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     menu : { flex: 1, justifyContent: "center" },
     title : { flex: 1.5, justifyContent: 'center' },
     textTitle : { textAlign: 'center', color: '#697683' },
-    iconContainer : { flex: 1, flexxDirection: 'row' },
+    iconContainer : { flex: 1, flexDirection: 'row' },
     icon : { flex: 1, justifyContent: 'center' },
 
 
