@@ -1,6 +1,6 @@
 
 import AsyncStorage from '@react-native-community/async-storage';
-import apiHepler from './../services/axiosConfig';
+import apiHepler from '../../../services/axiosConfig';
 import { ToastAndroid } from 'react-native';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -67,6 +67,7 @@ export const refreshToken = () => async dispatch => {
             type: REFRESH_TOKEN,
             token
         })
+      
     } catch (error) {
         dispatch({
             type: LOGOUT

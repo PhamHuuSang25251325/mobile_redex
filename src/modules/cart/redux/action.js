@@ -1,4 +1,4 @@
-import apiHepler from './../services/axiosConfig';
+import apiHepler from '../../../services/axiosConfig';
 import { ToastAndroid } from 'react-native'
 export const FETCHING_PRODUCTS = 'FETCHING_PRODUCTS';
 export const ADD_ITEM = 'ADD_ITEM';

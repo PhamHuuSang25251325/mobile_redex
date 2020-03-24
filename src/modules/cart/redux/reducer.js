@@ -6,7 +6,7 @@ import {
     DELETE_ITEM,
     CHECK_OUT,
     REQUEST_ERROR
-} from '../action/cart.action';
+} from './action';
 
 
 const initialState = {

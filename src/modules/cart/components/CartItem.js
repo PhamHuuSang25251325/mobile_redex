@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import Images from '../constants/images';
-import Tools from '../helper/Tools';
-import NumberInput from '../components/NumberInput';
+import Images from '../../../constants/images';
+import Tools from '../../../helper/Tools';
+import NumberInput from '../../../shared/NumberInput';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
 const CartItem = ({ item, navigation, deleteItem, updateItem }) => {

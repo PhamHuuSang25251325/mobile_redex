@@ -1,20 +1,19 @@
 import React, { useContext, useEffect } from 'react';
 import { View, SafeAreaView, ActivityIndicator } from 'react-native';
-import CustomHeader from '../../shared/CustomHeader';
+import CustomHeader from '../../../shared/CustomHeader';
 // import { Context as CartContext } from '../../contexts/CartContext';
-import Cart from '../../components/Cart';
+import Cart from '../components/Cart';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteItem, updateItem, getItems } from '../../action/cart.action';
+import { deleteItem, updateItem, getItems } from '../redux/action';
 
 
 const CartScreen = ({ navigation }) => {
-    const data = useSelector(state => state.cartReducer);
+    const data = useSelector(state => state.cartReducer.listItem);
     const dispatch = useDispatch();
-    const onDelete = (id)=>{
+    const onDelete = (id) => {
         dispatch(deleteItem(id))
     }
-
-    const onUpdateItem = (item)=>{
+    const onUpdateItem = (item) => {
         dispatch(updateItem(item))
     }
     // const { data, getItems, deleteItem, updateItem } = useContext(CartContext);
@@ -34,7 +33,7 @@ const CartScreen = ({ navigation }) => {
                 )
                 :
                 (
-                    <Cart data={data.listItem} deleteItem={onDelete} updateItem={onUpdateItem} navigation={navigation} />
+                    <Cart data={data} deleteItem={onDelete} updateItem={onUpdateItem} navigation={navigation} />
                 )}
 
         </SafeAreaView>

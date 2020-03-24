@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, Dimensions } from 'react-native';
-import CustomHeader from '../../shared/CustomHeader';
-import Images from '../../constants/images';
+import CustomHeader from '../../../shared/CustomHeader';
+import Images from '../../../constants/images';
 import LinearGradient from 'react-native-linear-gradient'
 
 const { width: WIDTH } = Dimensions.get('window');

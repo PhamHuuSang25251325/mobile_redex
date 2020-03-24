@@ -4,7 +4,7 @@ import {
     LOGIN_FAILURE,
     LOGOUT,
     REFRESH_TOKEN
-} from '../action/auth.action';
+} from './action';
 
 
 const initialState = {

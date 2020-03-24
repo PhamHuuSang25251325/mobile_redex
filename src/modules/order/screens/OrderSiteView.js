@@ -1,13 +1,15 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { View, ActivityIndicator, StyleSheet, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import CustomHeader from '../../shared/CustomHeader';
+import CustomHeader from '../../../shared/CustomHeader';
 import { WebView } from 'react-native-webview';
-import {Context} from '../../contexts/CartContext';
+import {Context} from '../../../contexts/CartContext';
+import {addItem} from '../../cart/redux/action';
+import { useDispatch } from 'react-redux';
 
 
 const OrderSiteView = ({ navigation, route }) => {
-    const {addItem} = useContext(Context);
+    const dispatch = useDispatch();
     const { uri, title } = route.params;
     const [visible, setVisible] = useState(true);
 
@@ -23,7 +25,7 @@ const OrderSiteView = ({ navigation, route }) => {
 
     const handleMessageAddToCart = e => {
         const data = JSON.parse(e.nativeEvent.data);
-        addItem(data);
+        dispatch(addItem(data))
     }
 
 

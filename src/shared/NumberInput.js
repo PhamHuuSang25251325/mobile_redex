@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Image } from 'react-native';
+import { View, TextInput, Image,TouchableOpacity } from 'react-native';
 import Images from '../constants/images';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const NumberInput = ({ value: initialValue, onChange }) => {
     const [value, setValue] = useState(initialValue);
@@ -31,7 +30,6 @@ const NumberInput = ({ value: initialValue, onChange }) => {
             <TouchableOpacity onPress={handlePlusPress}>
                 <Image source={Images.plus} style={{ width: 20, height: 20 }} />
             </TouchableOpacity>
-
         </View>
     )
 }

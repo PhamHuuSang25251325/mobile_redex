@@ -1,15 +1,17 @@
 import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import HomeScreen from '../screens/app/HomeScreen';
-import CartScreen from '../screens/app/CartScreen';
+import HomeScreen from '../modules/home/screens/HomeScreen';
+import CartScreen from '../modules/cart/screens/CartScreen';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Animated from 'react-native-reanimated';
 import {Context} from '../contexts/AuthContext';
-import OrderScreen from '../screens/app/OrderScreen';
-import OrderSiteView from '../screens/app/OrderSiteView';
+import OrderScreen from '../modules/order/screens/OrderScreen';
+import OrderSiteView from '../modules/order/screens/OrderSiteView';
+import { useDispatch } from 'react-redux';
+import {logout} from '../modules/auth/redux/action';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -29,7 +31,7 @@ const AppScreen = ({ navigation, style }) => {
 }
 
 const DrawerContent = (props) => {
-    const {logout} = useContext(Context);
+    const dispatch = useDispatch();
     return (
         <DrawerContentScrollView {...props} scrollEnabled={false} contentContainerStyle={{ flex: 1 }}>
             <View>
@@ -82,7 +84,7 @@ const DrawerContent = (props) => {
                     label="Logout"
                     labelStyle={{ color: 'white' }}
                     icon={() => <AntDesign name="logout" color="white" size={16} />}
-                    onPress={()=>logout()}
+                    onPress={()=>dispatch(logout())}
                 />
             </View>
         </DrawerContentScrollView>

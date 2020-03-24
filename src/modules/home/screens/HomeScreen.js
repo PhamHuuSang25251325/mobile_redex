@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
-import CustomHeader from '../../shared/CustomHeader';
+import CustomHeader from '../../../shared/CustomHeader';
 import LinearGradient from 'react-native-linear-gradient'
 
 

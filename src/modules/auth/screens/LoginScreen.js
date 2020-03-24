@@ -1,35 +1,32 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, ActivityIndicator,Picker,DatePickerAndroid } from 'react-native';
-import Images from './../../constants/images';
+import { View, Text, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
+import Images from '../../../constants/images';
 import { TextInput } from 'react-native-gesture-handler';
-import { Context } from '../../contexts/AuthContext';
+import { Context } from '../../../contexts/AuthContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../redux/action';
 
 const { width: WIDTH } = Dimensions.get('window');
 
 const LoginScreen = ({ navigation }) => {
-    const { data, register } = useContext(Context);
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
+    // const { data, login } = useContext(Context);
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [rePassword, setRePassword] = useState('');
+    const dispatch = useDispatch();
+    const logginIn = useSelector(state => state.authReducer.logginIn);
+    const err_message = useSelector(state => state.authReducer.err_message);
     return (
         <ImageBackground source={Images.background_login} style={styles.backgroundContainer}>
-              <View style={styles.inputContainer}>
-                <TextInput
-                    style={styles.input}
-                    placeholder='Name'
-                    value={name}
-                    onChangeText={setName}
-                    placeholderTextColor='rgba(255,255,255,0.7)'
-
-                />
+            <View style={styles.logoContainer}>
+                <Image source={Images.logo} style={styles.logo} />
+                <Text style={styles.text}>REDEX ORDER</Text>
             </View>
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
-                    placeholder='Email'
-                    value={email}
-                    onChangeText={setEmail}
+                    placeholder='Username'
+                    value={username}
+                    onChangeText={setUsername}
                     placeholderTextColor='rgba(255,255,255,0.7)'
 
                 />
@@ -46,31 +43,20 @@ const LoginScreen = ({ navigation }) => {
                 />
                 {/* <Text style={styles.textError}>Mật khẩu không được để trống</Text> */}
             </View>
-            <View style={styles.inputContainer}>
-                <TextInput
-                    style={styles.input}
-                    placeholder='RePass'
-                    value={rePassword}
-                    onChangeText={setRePassword}
-                    placeholderTextColor='rgba(255,255,255,0.7)'
-
-                />
-            </View>
-            
-            
-            {data.err_message && <Text style={styles.textError}>{data.err_message}</Text>}
-            <TouchableOpacity onPress={() => register({ email, password, name})} style={styles.btnLogin}>
-                {data.logginIn ? (<ActivityIndicator />) : (
-                    <Text style={styles.btnText}>REGISTER</Text>
+            {err_message ? <Text style={styles.textError}>{err_message}</Text> : null}
+            <TouchableOpacity onPress={() => dispatch(login({ username, password }))} style={styles.btnLogin} disabled={logginIn}>
+                {logginIn ? (<ActivityIndicator />) : (
+                    <Text style={styles.btnText}>Login</Text>
                 )}
             </TouchableOpacity>
             <View style={styles.textContainer}>
-                <TouchableOpacity onPress={() => navigation.navigate('LOGIN')}>
-                    <Text style={styles.textLink}>Quay lại Đăng nhập</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('REGISTER')}>
+                    <Text style={styles.textLink}>Đăng kí tài khoản</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
                     <Text style={{ ...styles.textLink, color: 'red' }}>Quên mật khẩu</Text>
                 </TouchableOpacity>
+
             </View>
         </ImageBackground>
     )

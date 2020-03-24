@@ -6,7 +6,7 @@ import { ActivityIndicator, View } from 'react-native';
 import Drawer from './AppNavigator';
 import AuthNavigator from './AuthNavigator';
 import { createStackNavigator } from "@react-navigation/stack";
-import { logout, refreshToken} from '../action/auth.action';
+import { logout, refreshToken} from '../modules/auth/redux/action';
 import { useDispatch, useSelector } from 'react-redux';
 
 const NavigatorConatiner = () => {
